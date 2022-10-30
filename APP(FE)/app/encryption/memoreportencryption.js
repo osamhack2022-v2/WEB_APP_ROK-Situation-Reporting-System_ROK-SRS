@@ -29,10 +29,10 @@ function generateKey(IV){
     return SHA256(IV);     
 }
 
-export async function encryptchat(userid, chatid, plaintext) {
+export async function encryptmemoreport(userid, memoid, plaintext) {
     let secret = null
     try { //secret exists
-        secret = await client.getSecret(userid + "-" + chatid);
+        secret = await client.getSecret(userid + "-" + memoid);
         let ciphertext = AES.encrypt(plaintext, secret.value).toString()
         return ciphertext
     } catch { //secret doesn't exist, send key
@@ -40,17 +40,18 @@ export async function encryptchat(userid, chatid, plaintext) {
         console.log(key)
         let encryptedkey = generateKey(uuidv4())
         const encrypted = key.encrypt(encryptedkey, 'base64');
-        secret = await client.setSecret(userid + "-" + chatid, encrypted);
+        let signature = encryptedkey.sign(secret)
+        secret = await client.setSecret(userid + "-" + memoid, encrypted);
         let ciphertext = AES.encrypt(plaintext, secret.value).toString()
-        return ciphertext
+        return [ciphertext, signature]
     }
 
 }
 
-export async function decryptuser(userid, chatid, ciphertext) {
+export async function decryptmemoreport(userid, memoid, ciphertext) {
     let secret = null
     try { //secret exists
-        secret = await client.getSecret(userid + "-" + chatid);
+        secret = await client.getSecret(userid + "-" + memoid);
     } catch { //make new secret
         return "unable to decrypt, id doesn't exist"
     }
