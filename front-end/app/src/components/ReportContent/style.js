@@ -29,37 +29,37 @@ export const styles = StyleSheet.create({
   paragraph: {
     width: '100%',
     marginTop: 5,
-    fontFamily: 'NunitoSans_400Regular',
+    fontFamily: 'notoserif',
     fontSize: 13,
     flex: 1,
     flexWrap: 'wrap',
   },
   contView: {
+    paddingTop: 20,
+
     width: '100%',
     flexDirection: 'row',
   },
   seqView: {
     flex: 1,
     alignItems: 'flex-start',
-    marginTop: 10,
+    justifyContent: 'flex-end',
   },
   seqText: {
-    paddingTop: 2,
     fontFamily: 'NunitoSans_400Regular',
-    fontSize: 12,
-    color: Colors.grey800,
+    fontSize: 13,
+    color: Colors.grey600,
   },
   buttonView: {
-    marginTop: 10,
-    marginRight: 2,
+    marginTop: 15,
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
   },
   endButton: {
-    backgroundColor: Colors.green600,
-    borderRadius: 5,
+    backgroundColor: '#3CB371',
+    borderRadius: 3,
     marginRight: 5,
     elevation: 3,
   },
@@ -68,8 +68,8 @@ export const styles = StyleSheet.create({
     fontFamily: 'NunitoSans_700Bold',
   },
   upButton: {
-    backgroundColor: Colors.red600,
-    borderRadius: 5,
+    backgroundColor: '#EE4455',
+    borderRadius: 3,
     elevation: 3,
   },
 })

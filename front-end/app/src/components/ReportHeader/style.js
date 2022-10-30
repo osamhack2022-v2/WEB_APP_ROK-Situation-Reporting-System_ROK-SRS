@@ -9,7 +9,6 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10,
   },
   left: {
     backgroundColor: Colors.white,
@@ -19,6 +18,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
+    fontFamily: 'NunitoSans_600SemiBold',
   },
   status: {
     fontSize: 19,
@@ -38,12 +38,13 @@ export const styles = StyleSheet.create({
   },
   severityText: {
     fontSize: 13,
-    fontFamily: 'NunitoSans_300Light',
+    fontFamily: 'NunitoSans_600SemiBold',
     marginRight: 3,
   },
   dateText: {
     fontSize: 12,
     fontFamily: 'NunitoSans_300Light',
     marginHorizontal: 10,
+    alignSelf: 'center',
   },
 })

@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 //prettier-ignore
 import { SafeAreaView, StyleSheet, View, FlatList, Text, TextInput } from 'react-native'
 import { IconButton } from 'react-native-paper'
@@ -10,13 +10,9 @@ import { Colors } from 'react-native-paper'
 import { useRecoilState } from 'recoil'
 import { userState } from '../../states/userState'
 import addCommentApi from '../../apis/report/addCommentApi'
+import { convertRank } from '../../helperfunctions/convertRank'
 
 export function ReportScreen({ route }) {
-  const addCommentHandler = async ({ Type, Content, Title, _id }) => {
-    const res = await addCommentApi({ Type, Content, Title, _id })
-    console.log(res)
-  }
-
   const {
     Title,
     Status,
@@ -26,21 +22,21 @@ export function ReportScreen({ route }) {
     Type,
     ReportingSystem,
     Invited,
-    Comments,
     User,
   } = route.params
+
+  const earlierComments = route.params.Comments
 
   const [userMe, setUserMe] = useRecoilState(userState)
 
   const [comment, setComment] = useState('')
-  const [comments, setComments] = useState([])
-
+  const [comments, setComments] = useState(earlierComments)
   const [open, setOpen] = useState(false)
   const [commentType, setCommentType] = useState('')
   const [typeItem, setTypeItem] = useState([
-    { label: '보고', value: 'report' },
-    { label: '지시', value: 'order' },
-    { label: '긴급', value: 'emergency' },
+    { label: '보고', value: '보고사항' },
+    { label: '지시', value: '지시사항' },
+    { label: '기밀', value: '기밀사항' },
   ])
 
   const [focus, setFocus] = useState(false)
@@ -53,8 +49,14 @@ export function ReportScreen({ route }) {
         Status={Status}
         Severity={Severity}
         date={date}
+        Type={Type}
       />
-      <ReportContent Content={Content} Type={Type} />
+      <ReportContent
+        Content={Content}
+        ReportingSystem={ReportingSystem}
+        Invited={Invited}
+        User={User}
+      />
       <View
         style={{
           width: '97%',
@@ -81,13 +83,12 @@ export function ReportScreen({ route }) {
   )
 
   const renderItem = ({ item }) => (
-    <ReportComment
-      name={item.Name}
-      position={item.position}
-      Content={item.Content}
-      Type={item.Type}
-    />
+    <ReportComment User={User} Content={item.Content} Type={item.Type} />
   )
+
+  const addCommentHandler = async ({ Type, Content, Title, _id }) => {
+    const res = await addCommentApi({ Type, Content, Title, _id })
+  }
 
   return (
     <SafeAreaView style={styles.container}>
@@ -132,6 +133,7 @@ export function ReportScreen({ route }) {
             size={25}
             color={focus ? '#008275' : Colors.grey500}
             onPress={() => {
+              // 추후 수정 필요
               setComments([
                 ...comments,
                 {
@@ -139,6 +141,7 @@ export function ReportScreen({ route }) {
                   position: userMe.Position,
                   Content: comment,
                   Type: commentType,
+                  Rank: convertRank(userMe.Rank),
                 },
               ])
               addCommentHandler({
