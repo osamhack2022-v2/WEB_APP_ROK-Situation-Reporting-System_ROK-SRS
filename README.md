@@ -10,7 +10,7 @@
 </p>
 
 1. [프로젝트 소개](#introduction)
-1. [기능 설명](#features)
+1. [기능 설명 / 프로젝트 사용법](#features)
 1. [컴퓨터 구성 / 필수 조건 안내 (Prerequisites)](#requirements)
 1. [기술 스택 (Technique Used) ](#techniques)
 1. [화면 설계](#functions)
@@ -105,6 +105,11 @@
 		</td>
 	</tr>
 </table>
+
+
+## 프로젝트 사용법 (Getting Started)
+[데모 영상](https://www.youtube.com/watch?v=4J2cPialaMY)
+
 
 <a id = "requirements"></a>
 
@@ -320,9 +325,6 @@ $ npx eas build -p ios
 * recoil
 
 
-
-## 프로젝트 사용법 (Getting Started)
-[데모 영상](https://www.youtube.com/watch?v=4J2cPialaMY)
 
  <a id = "team"></a>
 ## 팀 정보 (Team Information)
